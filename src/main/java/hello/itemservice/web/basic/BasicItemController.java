@@ -5,10 +5,7 @@ import hello.itemservice.domain.item.ItemRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
@@ -45,9 +42,59 @@ public class BasicItemController {
     /**
      * addForm에서 Post로 오면 save 호출
      */
+//    @PostMapping("/add")
+    public String addItemV1(@RequestParam String itemName,
+                            @RequestParam Integer price,
+                            @RequestParam Integer quantity,
+                            Model model) {
+
+        //아래는 4줄은 @ModelAttribute와 동일
+        Item item = new Item();
+        item.setItemName(itemName);
+        item.setPrice(price);
+        item.setQuantity(quantity);
+
+        itemRepository.save(item);
+
+        model.addAttribute("item", item);
+
+        return "/basic/item";
+    }
+
+    /**
+     * @ModelAttribute는 두가지를 같이 처리해준다.
+     *  1. 모델 객체 생성
+     *  2. 생성한 모델 객체를 뷰에 삽입 : 그때 이름은 @ModelAttribute("이름 속성")에 지정한 것
+     *      ex. @ModelAttribute("itemA")라고 하면 model.attribute("itemA", ... ) 라고 담긴다.
+     */
+//    @PostMapping("/add")
+    public String addItemV2(@ModelAttribute("item") Item item) {
+
+        itemRepository.save(item);
+//        model.addAttribute("item", item); //자동 추가, 생략 가능
+
+        return "/basic/item";
+    }
+
+    /**
+     * @ModelAttribute 이름 속성 생략 가능
+     * 생략하면 클래스 명에서 첫글자가 소문자로 치환되어 model.attribute에 담긴다
+     */
+//    @PostMapping("/add")
+    public String addItemV3(@ModelAttribute Item item) {
+
+        itemRepository.save(item);
+        return "/basic/item";
+    }
+
+    /**
+     * @ModelAttribute 생략 가능
+     */
     @PostMapping("/add")
-    public String save() {
-        return "/basic/addForm";
+    public String addItemV4(Item item) {
+
+        itemRepository.save(item);
+        return "/basic/item";
     }
 
     /**
