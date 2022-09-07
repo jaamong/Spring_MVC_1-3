@@ -63,9 +63,9 @@ public class BasicItemController {
 
     /**
      * @ModelAttribute는 두가지를 같이 처리해준다.
-     *  1. 모델 객체 생성
-     *  2. 생성한 모델 객체를 뷰에 삽입 : 그때 이름은 @ModelAttribute("이름 속성")에 지정한 것
-     *      ex. @ModelAttribute("itemA")라고 하면 model.attribute("itemA", ... ) 라고 담긴다.
+     * 1. 모델 객체 생성
+     * 2. 생성한 모델 객체를 뷰에 삽입 : 그때 이름은 @ModelAttribute("이름 속성")에 지정한 것
+     * ex. @ModelAttribute("itemA")라고 하면 model.attribute("itemA", ... ) 라고 담긴다.
      */
 //    @PostMapping("/add")
     public String addItemV2(@ModelAttribute("item") Item item) {
@@ -90,11 +90,21 @@ public class BasicItemController {
     /**
      * @ModelAttribute 생략 가능
      */
-    @PostMapping("/add")
+//    @PostMapping("/add")
     public String addItemV4(Item item) {
 
         itemRepository.save(item);
         return "/basic/item";
+    }
+
+    /**
+     * 상품 등록 후 중복 방지를 위해 redirect (PRG)
+     */
+    @PostMapping("/add")
+    public String addItemV5(Item item) {
+
+        itemRepository.save(item);
+        return "redirect:/basic/items/" + item.getId();
     }
 
     @GetMapping("/{itemId}/edit")
@@ -113,6 +123,7 @@ public class BasicItemController {
         itemRepository.update(itemId, item);
         return "redirect:/basic/items/{itemId}";
     }
+
 
     /**
      * 테스트용 데이터 추가
