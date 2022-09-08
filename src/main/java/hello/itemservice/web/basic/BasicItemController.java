@@ -66,7 +66,7 @@ public class BasicItemController {
      * @ModelAttribute는 두가지를 같이 처리해준다.
      * 1. 모델 객체 생성
      * 2. 생성한 모델 객체를 뷰에 삽입 : 그때 이름은 @ModelAttribute("이름 속성")에 지정한 것
-     * ex. @ModelAttribute("itemA")라고 하면 model.attribute("itemA", ... ) 라고 담긴다.
+     * ex. @ModelAttribute("itemA")라고 하면 model.addAttribute("itemA", ... ) 라고 담긴다.
      */
 //    @PostMapping("/add")
     public String addItemV2(@ModelAttribute("item") Item item) {
@@ -79,7 +79,7 @@ public class BasicItemController {
 
     /**
      * @ModelAttribute 이름 속성 생략 가능
-     * 생략하면 클래스 명에서 첫글자가 소문자로 치환되어 model.attribute에 담긴다
+     * 생략하면 클래스 명에서 첫글자가 소문자로 치환되어 model.addAttribute에 담긴다
      */
 //    @PostMapping("/add")
     public String addItemV3(@ModelAttribute Item item) {
