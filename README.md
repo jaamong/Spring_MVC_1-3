@@ -1,9 +1,16 @@
-# 요구사항 분석 - 서비스 제공 흐름
-***
-### - MVC 패턴을 이용하므로 항상 controller를 통해서 view 호출
-### - view template : thymeleaf
+### - SpringBoot, SpringMVC
+### - Database : H2
+### - Template Engine : Thymeleaf
 <br/>
 
+### 기능
+- 상품 목록 조회
+- 상품 상세 조회
+- 상품 등록
+- 상품 수정
+<br/>
+
+### 요구사항 분석 - 서비스 제공 흐름
 #### 상품 목록 -> 상품 등록
 1. 클라이언트가 상품 목록(controller)에 들어가면 상품 목록(view) 렌더링 
 2. 상품 목록(view)에서 상품 등록 폼(controller)로 이동 가능 
